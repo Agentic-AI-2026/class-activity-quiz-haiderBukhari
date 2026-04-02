@@ -4,22 +4,12 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.tools import tool
 from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage, AIMessage
 from langchain_mcp_adapters.client import MultiServerMCPClient
-import os, json, re, asyncio, subprocess, time, threading, requests
+import os, json, re, asyncio, subprocess, time, threading, requests, sys
 from langchain_mcp_adapters.client import MultiServerMCPClient
 import nest_asyncio
 nest_asyncio.apply()
 
 mcp = MultiServerMCPClient({
-    "math": {
-        "command": sys.executable,     # Full Python path e.g. C:\anaconda3\python.exe
-        "args": ["math_server.py"],    # Must be in same folder as notebook
-        "transport": "stdio",          # Communicate via stdin/stdout pipes
-    },
-    "data": {
-        "command": sys.executable,     # Full Python path e.g. C:\anaconda3\python.exe
-        "args": ["data_server.py"],    # Must be in same folder as notebook
-        "transport": "stdio",          # Communicate via stdin/stdout pipes
-    },
     "search": {
         "command": sys.executable,     # Full Python path e.g. C:\anaconda3\python.exe
         "args": ["search_server.py"],    # Must be in same folder as notebook
@@ -53,4 +43,4 @@ async def get_mcp_tools(servers: list) -> tuple:
 
 print(" MCP client helper ready")
 
-tools, tools_map = await get_mcp_tools(["search", "math"])
+# tools, tools_map = await get_mcp_tools(["search", "math"])
